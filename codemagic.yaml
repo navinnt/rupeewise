@@ -12,16 +12,17 @@
         script: |
           npm install
           npx --yes @capacitor/cli sync ios
-          ls -la ios/App/ || true
       - name: Install Pods
         script: |
           cd ios/App
-          if [ -f Podfile ]; then pod install; else echo "No Podfile - running pod init"; pod init || true; pod install || true; fi
+          if [ -f Podfile ]; then pod install; else echo "No Podfile"; fi
           cd ../..
-      - name: Build iOS
+      - name: Build iOS Simulator App
         script: |
           cd ios/App
-          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -archivePath build/App.xcarchive archive || xcodebuild -project App.xcodeproj -scheme App -configuration Release -archivePath build/App.xcarchive archive || true
+          xcodebuild -workspace App.xcworkspace -scheme App -sdk iphonesimulator -configuration Debug -destination "generic/platform=iOS Simulator" CODE_SIGNING_ALLOWED=NO build
+          ls -R build/ || true
           cd ../..
     artifacts:
-      - ios/App/build/App.xcarchive
+      - ios/App/build/Build/Products/Debug-iphonesimulator/App.app
+      - ios/App/build/**/*.app
