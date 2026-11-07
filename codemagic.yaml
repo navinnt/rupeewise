@@ -8,18 +8,14 @@
       node: 20
       cocoapods: default
     scripts:
-      - name: Clean and Install
+      - name: Install and Sync
         script: |
-          rm -rf node_modules
           npm install
-          npm install @capacitor/cli @capacitor/core @capacitor/ios
-      - name: Sync Capacitor iOS
-        script: |
-          npx cap sync ios
+          npx --yes @capacitor/cli sync ios
       - name: Install Pods
         script: |
           cd ios/App && pod install && cd ../..
-      - name: Build iOS IPA
+      - name: Build iOS
         script: |
           cd ios/App
           xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -archivePath build/App.xcarchive archive || true
