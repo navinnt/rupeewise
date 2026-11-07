@@ -17,9 +17,10 @@
       - name: Install dependencies
         script: |
           npm install
+          chmod +x node_modules/.bin/cap || true
       - name: Sync Capacitor iOS
         script: |
-          npx cap sync ios
+          node ./node_modules/@capacitor/cli/bin/cap sync ios
       - name: Install Pods
         script: |
           cd ios/App && pod install && cd ../..
@@ -32,7 +33,3 @@
     artifacts:
       - ios/App/build/ipa/*.ipa
       - ios/App/build/App.xcarchive
-    publishing:
-      email:
-        recipients:
-          - navinnt@gmail.com
