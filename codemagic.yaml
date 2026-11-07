@@ -5,7 +5,7 @@
     instance_type: mac_mini_m2
     environment:
       xcode: 16.0
-      node: 20
+      node: 22
       cocoapods: default
     scripts:
       - name: Install and Sync
